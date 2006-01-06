@@ -3,7 +3,7 @@ package WWW::Ofoto;
 ###########################################################################
 # WWW::Ofoto
 # Mark V. Grimes
-# $Id: Ofoto.pm,v 1.8 2006/01/06 02:55:53 mgrimes Exp $
+# $Id: Ofoto.pm,v 1.9 2006/01/06 18:16:37 mgrimes Exp $
 #
 # A perl module to interact with the ofoto website.
 # Copyright (c) 2005  (Mark V. Grimes).
@@ -26,7 +26,7 @@ use WWW::Mechanize;
 use DateTime;
 
 use vars qw($VERSION);
-$VERSION = sprintf("%d.%02d", q$Revision: 1.8 $ =~ /(\d+)\.(\d+)/);
+$VERSION = sprintf("%d.%02d", q$Revision: 1.9 $ =~ /(\d+)\.(\d+)/);
 
 our $AUTOLOAD;		# Magic AUTOLOAD functions
 my  $debug = 0;		# Class level debug flag
@@ -237,7 +237,7 @@ sub _upload_images {
 		$ua->field( sprintf("%s%d", "image_file_", $i++), $file );
 	}
 	$ua->submit_form( form_name => "ofoto_uploadBrowseform2" ) or croak "couldn't upload pictures";
-	my ($count) = $ua->content =~ m!(\d+) photos have been uploaded to this album!;
+	my ($count) = $ua->content =~ m!(\d+) photos? ha(?:ve|s) been uploaded to this album!;
 	print "uploaded $count pictures\n" if $self->debug;
 	$self->dump2file;
 	return $count;
@@ -253,7 +253,7 @@ sub upload_to_album {
 	my $albums = $self->list_albums;
 	croak "album $opts->{title} does not exists" unless $albums->{ $opts->{title} }; 
 
-	my $count;
+	my $count = 0;
 	while( my @pics_subset = splice @pics, 0, $self->{_maxupload} ){
 		$count += $self->_upload_to_album( $opts->{title}, @pics_subset );
 	}
@@ -325,7 +325,7 @@ sub _confirm_album_opts {
 	
 	croak "missing title passed to upload_new_album" unless $opts->{title};
 	if( $new ){
-	croak "missing desc passed to upload_new_album" unless $opts->{desc};
+	croak "missing desc passed to upload_new_album" unless defined $opts->{desc};
 	croak "missing date passed to upload_new_album" unless $opts->{date};
 	croak "date must be a DateTime object pass to upload_new_album" unless ref $opts->{date} eq "DateTime";
 	}

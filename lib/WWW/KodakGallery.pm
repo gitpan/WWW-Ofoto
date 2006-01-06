@@ -3,7 +3,7 @@ package WWW::KodakGallery;
 ###########################################################################
 # WWW::KodakGallery
 # Mark V. Grimes
-# $Id: KodakGallery.pm,v 1.1 2006/01/06 02:53:04 mgrimes Exp $
+# $Id: KodakGallery.pm,v 1.2 2006/01/06 18:16:37 mgrimes Exp $
 #
 # A perl module to interact with the ofoto website.
 # Copyright (c) 2005  (Mark V. Grimes).
@@ -17,7 +17,7 @@ package WWW::KodakGallery;
 use base qw(WWW::Ofoto);
 
 use vars qw($VERSION);
-$VERSION = sprintf("%d.%02d", q$Revision: 1.1 $ =~ /(\d+)\.(\d+)/);
+$VERSION = sprintf("%d.%02d", q$Revision: 1.2 $ =~ /(\d+)\.(\d+)/);
 
 1;
 
@@ -31,8 +31,8 @@ WWW::KodakGallery - A module to interact with the Kodakgallery website
 
 This module provides a basic interface to the KodakGallery 
 website (C<http://wwww.kodakgallery.com/>). It simply subclasses the
-C<WWW::Ofoto> module which provides all the functionality. See
-C<WWW::Ofoto> for documentation. You should be to subsitute C<KodakGallery>
+C<WWW::Ofoto> module, which provides all the functionality. See
+C<WWW::Ofoto> for documentation. You should be able to subsitute C<KodakGallery>
 for C<Ofoto>. Or, you could just use the C<WWW::Ofoto> directly; they are
 interechangable.
 

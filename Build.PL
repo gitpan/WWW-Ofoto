@@ -11,6 +11,7 @@ my $build = Module::Build->new(
 						'WWW::Mechanize'=> 1.0,
 					},
 	recommends		=> {
+						'AppConfig'		=> 0,
 					},
 	);
 
