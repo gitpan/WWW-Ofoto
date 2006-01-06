@@ -1,11 +1,12 @@
 Build.PL
 ChangeLog
-lib/WWW/Ofoto.pm
 lib/WWW/KodakGallery.pm
+lib/WWW/Ofoto.pm
 MANIFEST
 META.yml			Module meta-data (added by MakeMaker)
 README
 samples/listalbums.pl
+samples/ofoto-upload.pl
 t/00-new.t
 t/01-args.t
 t/02-kodak.t
@@ -19,3 +20,4 @@ t/98-pod.t
 t/99-podcoverage.t
 t/pics/test1.jpg
 t/pics/test2.jpg
+TODO

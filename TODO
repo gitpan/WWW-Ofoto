@@ -1,0 +1,6 @@
+* Review expection and errors handling
+* Cleanup from the tests or at least keep it to one new album
+* Add a test for a single photo upload, different return code
+lib/WWW/Ofoto.pm: # TODO: get pictures from albums?
+lib/WWW/Ofoto.pm: # TODO: delete albums?
+t/11-listalbums.t:# TODO: exception handling

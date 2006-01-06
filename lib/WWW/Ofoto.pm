@@ -3,7 +3,7 @@ package WWW::Ofoto;
 ###########################################################################
 # WWW::Ofoto
 # Mark V. Grimes
-# $Id: Ofoto.pm,v 1.9 2006/01/06 18:16:37 mgrimes Exp $
+# $Id: Ofoto.pm,v 1.10 2006/01/06 19:02:43 mgrimes Exp $
 #
 # A perl module to interact with the ofoto website.
 # Copyright (c) 2005  (Mark V. Grimes).
@@ -26,7 +26,7 @@ use WWW::Mechanize;
 use DateTime;
 
 use vars qw($VERSION);
-$VERSION = sprintf("%d.%02d", q$Revision: 1.9 $ =~ /(\d+)\.(\d+)/);
+$VERSION = sprintf("%d.%02d", q$Revision: 1.10 $ =~ /(\d+)\.(\d+)/);
 
 our $AUTOLOAD;		# Magic AUTOLOAD functions
 my  $debug = 0;		# Class level debug flag
@@ -509,7 +509,7 @@ and C<link> are the keys to the value hash:
 Takes a the relevant data, creates a new album and uploads the pictures
 to the Ofoto site. A large number of photos may be sent with each call to
 C<upload_new_album>. The method will break the photos into smaller groups
-and upload each.
+and upload each. 
 
 Will most likely croak if there is any error. The number of photos uploaded
 is returned.
@@ -556,7 +556,7 @@ Mark V. Grimes, E<lt>mgrimes@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2005 by mgrimes
+Copyright (C) 2005 by Mark V. Grimes
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.2 or,
