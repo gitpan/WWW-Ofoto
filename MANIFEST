@@ -1,0 +1,19 @@
+Build.PL
+ChangeLog
+lib/WWW/Ofoto.pm
+MANIFEST
+META.yml			Module meta-data (added by MakeMaker)
+README
+samples/listalbums.pl
+t/00-new.t
+t/01-args.t
+t/10-login.t
+t/11-listalbums.t
+t/12-upload.t
+t/13-addphotos.t
+t/14-upload_lots.t
+t/15-add_lots.t
+t/98-pod.t
+t/99-podcoverage.t
+t/pics/test1.jpg
+t/pics/test2.jpg

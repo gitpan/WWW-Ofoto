@@ -1,0 +1,54 @@
+2006-01-05 17:59  mgrimes
+
+	* .releaserc: Added the releaserc file for use with Module::Release
+
+2006-01-05 17:54  mgrimes
+
+	* samples/listalbums.pl: Adding a sample script.
+
+2006-01-05 17:49  mgrimes
+
+	* MANIFEST, t/10-login.t, t/11-listalbums.t, t/12-upload.t,
+	  t/13-addphotos.t, t/14-upload_lots.t, t/15-add_lots.t: Tweaking
+	  the test scripts.
+
+2006-01-05 17:25  mgrimes
+
+	* Build.PL, Makefile.PL, lib/WWW/Ofoto.pm: Added the pod
+
+2006-01-05 15:52  mgrimes
+
+	* Build.PL, MANIFEST, Makefile.PL, setup_env.sh, lib/WWW/Ofoto.pm,
+	  t/10-login.t, t/11-listalbums.t, t/12-upload.t, t/13-addphotos.t,
+	  t/14-upload_lots.t, t/15-add_lots.t: Cleaned up some of the
+	  tests.  Optimized and cleaned up some of the module.	Added a
+	  Build.PL script; not sure which I prefer.
+
+2006-01-05 15:02  mgrimes
+
+	* lib/WWW/Ofoto.pm, t/10-login.t, t/11-listalbums.t, t/12-upload.t,
+	  t/13-addphotos.t, t/14-upload_lots.t, t/15-add_lots.t: Looks like
+	  it is working. Could use some optimizing.
+
+2005-01-06 17:43  mgrimes
+
+	* Makefile.PL, lib/WWW/Ofoto.pm, t/00-new.t, t/01-args.t,
+	  t/10-login.t, t/11-listalbums.t, t/12-upload.t, t/13-addphotos.t,
+	  t/pics/test1.jpg, t/pics/test2.jpg: Added prereq to Makefile
+	  Added upload capabilities to both new and existing albums.  Added
+	  associated tests
+
+2005-01-02 13:54  mgrimes
+
+	* lib/WWW/Ofoto.pm, t/99-podcoverage.t: Added some initial code.
+
+2005-01-02 13:44  mgrimes
+
+	* MANIFEST, Makefile.PL, README.head, lib/WWW/Ofoto.pm, t/00-new.t,
+	  t/98-pod.t, t/99-podcoverage.t: Initial import
+
+2005-01-02 13:44  mgrimes
+
+	* MANIFEST, Makefile.PL, README.head, lib/WWW/Ofoto.pm, t/00-new.t,
+	  t/98-pod.t, t/99-podcoverage.t: Initial revision
+

@@ -1,0 +1,20 @@
+use Module::Build;
+my $build = Module::Build->new(
+
+	module_name		=> 'WWW::Ofoto',
+	license			=> 'perl',
+	create_readme	=>  1,
+	requires		=> {
+						'Carp'			=> 0,
+						'Hash::Util'	=> 0,
+						'DateTime'		=> 0,
+						'WWW::Mechanize'=> 1.0,
+					},
+	recommends		=> {
+					},
+	);
+
+$build->create_build_script;
+
+
+

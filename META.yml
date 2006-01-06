@@ -1,0 +1,18 @@
+--- #YAML:1.0
+name: WWW-Ofoto
+version: 1.07
+author:
+  - Mark V. Grimes, E<lt>mgrimes@cpan.orgE<gt>
+abstract: |-
+  A module to interact with the Ofoto (now Kodakgallery) website
+license: perl
+requires:
+  Carp: 0
+  DateTime: 0
+  Hash::Util: 0
+  WWW::Mechanize: 1
+provides:
+  WWW::Ofoto:
+    file: lib/WWW/Ofoto.pm
+    version: 1.07
+generated_by: Module::Build version 0.2607
