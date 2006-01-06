@@ -1,3 +1,28 @@
+2006-01-05 18:55  mgrimes
+
+	* lib/WWW/Ofoto.pm: Updated some pod.
+
+2006-01-05 18:53  mgrimes
+
+	* MANIFEST: Missed the kodak test in the MANIFEST file.
+
+2006-01-05 18:53  mgrimes
+
+	* MANIFEST, lib/WWW/KodakGallery.pm, t/02-kodak.t: Added the
+	  WWW::KodakGallery module to (hopefully) alleviate any confusion
+	  over naming (Kodak apparently bought Ofoto).
+
+2006-01-05 18:19  mgrimes
+
+	* lib/WWW/Ofoto.pm: Fixed a bug in the list_albums code. Wasn't
+	  really getting all the pages of albums.
+
+2006-01-05 18:19  mgrimes
+
+	* MANIFEST, Makefile.PL: Removed Makefile.PL from MANIFEST, seems
+	  to be confused by the Build.PL file.	Fixed the cvs2cl command in
+	  Makefile.PL
+
 2006-01-05 17:59  mgrimes
 
 	* .releaserc: Added the releaserc file for use with Module::Release

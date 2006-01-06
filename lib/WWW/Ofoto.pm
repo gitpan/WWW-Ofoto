@@ -3,7 +3,7 @@ package WWW::Ofoto;
 ###########################################################################
 # WWW::Ofoto
 # Mark V. Grimes
-# $Id: Ofoto.pm,v 1.7 2006/01/06 02:19:53 mgrimes Exp $
+# $Id: Ofoto.pm,v 1.8 2006/01/06 02:55:53 mgrimes Exp $
 #
 # A perl module to interact with the ofoto website.
 # Copyright (c) 2005  (Mark V. Grimes).
@@ -26,7 +26,7 @@ use WWW::Mechanize;
 use DateTime;
 
 use vars qw($VERSION);
-$VERSION = sprintf("%d.%02d", q$Revision: 1.7 $ =~ /(\d+)\.(\d+)/);
+$VERSION = sprintf("%d.%02d", q$Revision: 1.8 $ =~ /(\d+)\.(\d+)/);
 
 our $AUTOLOAD;		# Magic AUTOLOAD functions
 my  $debug = 0;		# Class level debug flag
@@ -547,7 +547,8 @@ it will write to C<t.html>. Any existing file will be overwritten.
 
 =head1 SEE ALSO
 
-The C<WWW::Mechanize> module.
+The C<WWW::Mechanize> module. C<WWW::KodakGallery> module, which is
+just a wrapper around this module.
 
 =head1 AUTHOR
 

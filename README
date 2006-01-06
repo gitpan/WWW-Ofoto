@@ -120,7 +120,8 @@ DESCRIPTION
     write to "t.html". Any existing file will be overwritten.
 
 SEE ALSO
-    The "WWW::Mechanize" module.
+    The "WWW::Mechanize" module. "WWW::KodakGallery" module, which is just a
+    wrapper around this module.
 
 AUTHOR
     Mark V. Grimes, <mgrimes@cpan.org>
