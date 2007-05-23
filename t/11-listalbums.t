@@ -28,12 +28,12 @@ my $count = scalar keys %$albums;
 ok( $count,"returned $count albums" ) 
 	or die "Unable to parse the list of albums, do you have any in your account?";
 
-ok( exists $albums->{'Sample Album'}, "found sample album" ) 
-	or die "Your account must contain the 'Sample Album' for tests to work"; 
+ok( exists $albums->{'Sample album'}, "found sample album" ) 
+	or die "Your account must contain the 'Sample album' for tests to work"; 
 
-ok( $albums->{'Sample Album'}->{count} > 0, "non zero photo count");
-ok( $albums->{'Sample Album'}->{link} =~ m!^BrowsePhotos!,"link looks ok" )
-	or diag("link is: ",  $albums->{'Sample Album'}->{link} );
+ok( $albums->{'Sample album'}->{count} > 0, "non zero photo count");
+ok( $albums->{'Sample album'}->{link} =~ m!^BrowsePhotos!,"link looks ok" )
+	or diag("link is: ",  $albums->{'Sample album'}->{link} );
 
-isa_ok( $albums->{'Sample Album'}->{date}, 'DateTime',
+isa_ok( $albums->{'Sample album'}->{date}, 'DateTime',
 		"date is a valid DateTime object" );

@@ -1,0 +1,16 @@
+^_build
+^Build$
+^blib
+~$
+\.bak$
+^MANIFEST\.skip$
+CVS
+
+^WWW-Ofoto-\d\.\d+
+.releaserc
+ChangeLog.bak
+Makefile.PL
+README.head
+setup_env.sh
+t.html
+t.pl

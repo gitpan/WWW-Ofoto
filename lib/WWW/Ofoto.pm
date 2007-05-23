@@ -3,7 +3,7 @@ package WWW::Ofoto;
 ###########################################################################
 # WWW::Ofoto
 # Mark V. Grimes
-# $Id: Ofoto.pm,v 1.10 2006/01/06 19:02:43 mgrimes Exp $
+# $Id: Ofoto.pm,v 1.11 2007/05/23 21:57:54 mgrimes Exp $
 #
 # A perl module to interact with the ofoto website.
 # Copyright (c) 2005  (Mark V. Grimes).
@@ -24,12 +24,12 @@ use Carp;
 use Hash::Util qw(lock_keys);	# Lock a hash so no new keys can be added
 use WWW::Mechanize;
 use DateTime;
+use base qw(Class::Accessor::Fast);
 
 use vars qw($VERSION);
-$VERSION = sprintf("%d.%02d", q$Revision: 1.10 $ =~ /(\d+)\.(\d+)/);
+$VERSION = sprintf("%d.%02d", q$Revision: 1.11 $ =~ /(\d+)\.(\d+)/);
 
-our $AUTOLOAD;		# Magic AUTOLOAD functions
-my  $debug = 0;		# Class level debug flag
+my  $debug = 1;		# Class level debug flag
 
 # #########################################################
 #
@@ -44,6 +44,7 @@ my %fields = (		# List of all the fields which will have accessors
 	'passwd'	=> undef,
 
 );
+__PACKAGE__->mk_accessors( keys %fields );
 
 sub new {
 	my $that  = shift;
@@ -84,7 +85,7 @@ sub login {
 
 	print "Loading the ofoto website\n" if $self->debug;
 	$ua->get("http://www.kodakgallery.com/Welcome.jsp") or croak "could not load start page";
-	$ua->follow_link( text_regex => qr/Sign In/i ) or croak "could not find Sign In link";
+	$ua->follow_link( text_regex => qr/Sign in/i ) or croak "could not find Sign In link";
 
 	print "Signing into ofoto account\n" if $self->debug;
 	$ua->submit_form( 
@@ -98,9 +99,11 @@ sub login {
 				}
 			) or croak "error submiting login form";
 	$self->dump2file();
-	$ua->follow_link( url_regex => qr{/MyKodak.jsp} ) or croak "could not find My Kodak link";
 
-	return $self->{_loggedin} = $ua->content =~ m{Welcome,};
+	$ua->follow_link( url_regex => qr{MyGallery.jsp} ) or croak "could not find My Kodak link";
+	$self->dump2file();
+
+	return $self->{_loggedin} = $ua->content =~ m{Welcome };
 }
 
 sub _get_page_links {
@@ -151,7 +154,7 @@ sub list_albums {
 
 	croak "need to login first" unless $self->{_loggedin};
 
-	$ua->follow_link( text_regex => qr{View All Albums|My Albums} ) or croak "Couldn't find the View All Albums link";
+	$ua->follow_link( text_regex => qr{My Recent Albums|My Albums} ) or croak "Couldn't find the View All Albums link";
 
 	my @matches = $self->_get_album_links;		# pull raw album data off the page
 	my $page_count = $self->_get_page_links;	# are there any Page 1 2 3 4 links
@@ -211,11 +214,12 @@ sub _create_new_album {
 	my $opts = shift;
 	my $ua = $self->{_ua};
 
-	$ua->follow_link( text_regex => qr{Upload Photos} ) or croak "Couldn't find an upload link";
+	$ua->follow_link( url_regex => qr{Upload.jsp} ) or croak "Couldn't find an upload link";
+    $self->dump2file;
 
 	# Create new album
 	$ua->submit_form(
-		form_name	=> "ofoto_uploadform",
+		form_name	=> "upload_edit_sniff_form",
 		fields		=> {
 			month	=>  $opts->{date}->month,
 			day		=>  $opts->{date}->day,
@@ -224,6 +228,9 @@ sub _create_new_album {
 			name	=>  $opts->{title},
 		}
 	) or croak "Couldn't upload form";
+
+    $self->dump2file;
+    return;
 }
 
 sub _upload_images {
@@ -231,15 +238,41 @@ sub _upload_images {
 	my @pics = @_;
 	my $ua = $self->{_ua};
 
-	$ua->form_name( "ofoto_uploadBrowseform2" ) or croak "couldn't find the image name form";
-	my $i=1;
+    my $fields;
+    my $input_html;
+
+	my $i=0;
 	for my $file (@pics){
-		$ua->field( sprintf("%s%d", "image_file_", $i++), $file );
+        my $id = sprintf("%s%d", "image_file_", ++$i);
+        $fields->{ $id } = $file;
+        $input_html .= "<input class='showFile' type='file' size='0' name='$id' id='$id' value='$file'/>\n";
 	}
-	$ua->submit_form( form_name => "ofoto_uploadBrowseform2" ) or croak "couldn't upload pictures";
+
+    print "input = $input_html\n";
+    my $content = $ua->content;
+    $content =~ s{
+            \s* <input[^>]*id="image_file_1"[^>]*/> \s*
+        }{
+            $input_html
+        }x  or croak "couldn't update the html for input\n";
+    print $content;
+    $ua->update_html( $content );
+
+
+    $fields->{uploadinprogress} = 'true';
+    $fields->{num_files} = scalar @pics;
+
+	$ua->submit_form(
+            form_name => "ofoto_uploadBrowseform2",
+            fields => $fields,
+        ) or croak "couldn't upload pictures";
+
+    $self->dump2file;
+
 	my ($count) = $ua->content =~ m!(\d+) photos? ha(?:ve|s) been uploaded to this album!;
 	print "uploaded $count pictures\n" if $self->debug;
 	$self->dump2file;
+
 	return $count;
 }
 
@@ -337,37 +370,7 @@ sub _confirm_album_opts {
 sub DESTROY {
 	my $self = shift;
 	print "WWW::Ofoto: DESTROY\n" if $self->debug;
-}
-
-# #########################################################
-#
-# Proxy accessor and methods
-#
-# #########################################################
-
-sub AUTOLOAD {
-	my $self = shift;
-	my $type = ref($self) or croak "$self is not an object";
-
-	my $name = $AUTOLOAD;
-	$name =~ s/.*://;			# Strip fully qualified portion
-
-	# ensure none of these are DESTROY
-	return if $name =~ /^DESTROY$/;	
-
-	# Ensure that this is an accessor to a permitted field
-	unless (exists $self->{'_permitted'}->{$name} ){
-		croak "Can't access `$name` field in class $type";
-	}
-
-	print "AUTOLOAD ($name)\n" if $self->debug;
-
-	# Return the value of the field, setting if an argument supplied
-	if(@_){
-		return $self->{$name} = shift;
-	} else {
-		return $self->{$name};
-	}
+    return;
 }
 
 # #########################################################
@@ -394,6 +397,7 @@ sub debug {
 	} else {			# Return the debug level
 		return $debug || $self->{'_DEBUG'};
 	}
+    return;
 }
 
 sub dump2file {
@@ -402,9 +406,11 @@ sub dump2file {
 
 	return unless $self->debug;
 
-	open my $f, ">$file.html" or die $!;
+	open my $f, ">", "$file.html" or croak $!;
 	print $f $self->{_ua}->content;
 	close $f;
+
+    return;
 }
 
 1;

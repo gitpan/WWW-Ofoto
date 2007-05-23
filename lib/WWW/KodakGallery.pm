@@ -3,7 +3,7 @@ package WWW::KodakGallery;
 ###########################################################################
 # WWW::KodakGallery
 # Mark V. Grimes
-# $Id: KodakGallery.pm,v 1.2 2006/01/06 18:16:37 mgrimes Exp $
+# $Id: KodakGallery.pm,v 1.4 2007/05/04 18:26:05 mgrimes Exp $
 #
 # A perl module to interact with the ofoto website.
 # Copyright (c) 2005  (Mark V. Grimes).
@@ -14,10 +14,13 @@ package WWW::KodakGallery;
 #
 ###########################################################################
 
+use strict;
+use warnings;
+
 use base qw(WWW::Ofoto);
 
 use vars qw($VERSION);
-$VERSION = sprintf("%d.%02d", q$Revision: 1.2 $ =~ /(\d+)\.(\d+)/);
+$VERSION = sprintf("%d.%02d", q$Revision: 1.4 $ =~ /(\d+)\.(\d+)/);
 
 1;
 

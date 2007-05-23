@@ -1,0 +1,5 @@
+# I should probably fix this:
+[-CodeLayout::ProhibitHardTabs]
+
+# We have a bunch of short re the /x flag seems like overkill
+[-RegularExpressions::RequireExtendedFormatting]

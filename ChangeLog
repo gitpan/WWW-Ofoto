@@ -1,3 +1,31 @@
+2007-05-23 15:01  mgrimes
+
+	* .cvsignore: Added cvsignore file
+
+2007-05-23 14:59  mgrimes
+
+	* Build.PL: Added prereq for Class::Accessor::Fast
+
+2007-05-23 14:57  mgrimes
+
+	* Build.PL, MANIFEST, README, t.html, unset_env.sh,
+	  lib/WWW/Ofoto.pm, t/11-listalbums.t, t/96-kwalitee.t,
+	  t/97-critic.t, t/98-pod.t, t/99-podcoverage.t, t/perlcriticrc:
+	  Update to work with changes in Kodak website Added more tests
+
+2007-05-04 11:26  mgrimes
+
+	* lib/WWW/KodakGallery.pm: Added strictures
+
+2006-07-01 15:49  mgrimes
+
+	* lib/WWW/KodakGallery.pm: Added use strict.
+
+2006-01-06 11:05  mgrimes
+
+	* MANIFEST.skip: Still cleaning. Added WWW-Ofoto-#.## to the skip
+	  list.
+
 2006-01-06 11:02  mgrimes
 
 	* MANIFEST, MANIFEST.skip, t.html, t.pl, lib/WWW/Ofoto.pm: Cleaning
