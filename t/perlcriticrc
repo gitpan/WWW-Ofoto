@@ -1,3 +1,5 @@
+verbose = 4
+
 # I should probably fix this:
 [-CodeLayout::ProhibitHardTabs]
 

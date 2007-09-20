@@ -3,7 +3,7 @@ package WWW::Ofoto;
 ###########################################################################
 # WWW::Ofoto
 # Mark V. Grimes
-# $Id: Ofoto.pm,v 1.11 2007/05/23 21:57:54 mgrimes Exp $
+# $Id: Ofoto.pm,v 1.12 2007/09/19 17:06:38 mgrimes Exp $
 #
 # A perl module to interact with the ofoto website.
 # Copyright (c) 2005  (Mark V. Grimes).
@@ -26,8 +26,7 @@ use WWW::Mechanize;
 use DateTime;
 use base qw(Class::Accessor::Fast);
 
-use vars qw($VERSION);
-$VERSION = sprintf("%d.%02d", q$Revision: 1.11 $ =~ /(\d+)\.(\d+)/);
+our $VERSION = '1.20';
 
 my  $debug = 1;		# Class level debug flag
 
@@ -154,7 +153,8 @@ sub list_albums {
 
 	croak "need to login first" unless $self->{_loggedin};
 
-	$ua->follow_link( text_regex => qr{My Recent Albums|My Albums} ) or croak "Couldn't find the View All Albums link";
+	# $ua->follow_link( text_regex => qr{My Recent Albums|My Albums} ) or croak "Couldn't find the View All Albums link";
+	$ua->follow_link( url_regex => qr{AlbumMenu.jsp\?$} ) or croak "Couldn't find the AlbumMenu main link";
 
 	my @matches = $self->_get_album_links;		# pull raw album data off the page
 	my $page_count = $self->_get_page_links;	# are there any Page 1 2 3 4 links
@@ -234,8 +234,7 @@ sub _create_new_album {
 }
 
 sub _upload_images {
-	my $self = shift;
-	my @pics = @_;
+	my ($self, @pics) = @_;
 	my $ua = $self->{_ua};
 
     my $fields;
@@ -294,9 +293,7 @@ sub upload_to_album {
 }
 
 sub _upload_to_album {
-	my $self = shift;
-	my $title = shift;
-	my @pics = @_;
+	my ($self, $title, @pics) = @_;
 	my $ua = $self->{_ua};
 
 	$ua->follow_link( text => "Upload Photos" ) or croak "couldn't find Upload Photos page";
@@ -382,11 +379,10 @@ sub DESTROY {
 #
 # #########################################################
 
-sub debug {
-	my $self = shift;
+sub debug { 
+	my ($self, $level) = @_;
 
-	if(@_){				# Set the debug level
-		my $level = shift;
+	if($level){				# Set the debug level       
 		if( ref($self) ){
 			$self->{'_DEBUG'} = $level;
 		} else {

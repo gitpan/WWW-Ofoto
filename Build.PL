@@ -4,8 +4,8 @@ my $class = Module::Build->subclass(
     class => 'My::Builder',
     code  => q{
                  sub ACTION_dist {
-                     print "Running cvs2cl.pl to create ChangeLog\n";
-                     system( 'cvs2cl.pl' );
+                     print "Running svn2cl to create ChangeLog\n";
+                     system( 'svn2cl' );
                      shift->SUPER::ACTION_dist(@_);
                  }
               },
@@ -22,6 +22,7 @@ my $build = $class->new(
 						'DateTime'		=> 0,
 						'WWW::Mechanize'=> 1.0,
                         'Class::Accessor::Fast' => 0,
+                        'Crypt::SSLeay' => 0,
 					},
 	recommends		=> {
 						'AppConfig'		=> 0,

@@ -10,10 +10,10 @@ my $passwd = $ENV{WWW_OFOTO_PASSWD};
 
 plan skip_all => "- valid Ofoto account needed for online tests. To enable tests set WWW_OFOTO_EMAIL and WWW_OFOTO_PASSWD environment variables."
 		unless $email && $passwd;
-plan tests => 6;
+plan tests => 7;
 
 # can we load the library?
-BEGIN { use_ok( 'WWW::Ofoto' ); };
+use_ok( 'WWW::Ofoto' );
 
 # create client with ordered list of arguements
 my $ofoto = WWW::Ofoto->new( { email => $email, passwd => $passwd } );
