@@ -26,7 +26,7 @@ use WWW::Mechanize;
 use DateTime;
 use base qw(Class::Accessor::Fast);
 
-our $VERSION = '1.20';
+our $VERSION = '1.21';
 
 my  $debug = 1;		# Class level debug flag
 

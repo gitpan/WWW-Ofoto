@@ -1,6 +1,6 @@
 ---
 name: WWW-Ofoto
-version: 1.20
+version: 1.21
 author:
   - 'Mark V. Grimes, E<lt>mgrimes@cpan.orgE<gt>'
 abstract: A module to interact with the Ofoto (now Kodakgallery) website
@@ -22,7 +22,7 @@ provides:
     version: 1.04
   WWW::Ofoto:
     file: lib/WWW/Ofoto.pm
-    version: 1.20
+    version: 1.21
 generated_by: Module::Build version 0.2808
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html

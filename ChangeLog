@@ -1,3 +1,18 @@
+2007-09-20 21:15  mgrimes
+
+	* ., .cvsignore, .releaserc: Moved cvsingore into svn:ignore
+	  property
+
+2007-09-20 19:37  mgrimes
+
+	* Build.PL, lib/WWW/Ofoto.pm, t.html, t/14-upload_lots.t,
+	  t/perlcriticrc: Updates to satisfy perlcritic
+
+2007-09-20 18:14  mgrimes
+
+	* Build.PL, t.html, t/14-upload_lots.t: Fixed missing requirement.
+	  Took use_ok out of BEGIN{} block.
+
 2007-09-19 17:26  mgrimes
 
 	* trunk/passwiz, trunk/passwiz/MANIFEST, trunk/passwiz/META.yml,
