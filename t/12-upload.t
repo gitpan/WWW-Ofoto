@@ -4,6 +4,8 @@ use strict;
 use warnings;
 
 use Test::More;
+use WWW::Ofoto;
+use DateTime;
 
 my $email = $ENV{WWW_OFOTO_EMAIL};
 my $passwd = $ENV{WWW_OFOTO_PASSWD};
@@ -11,12 +13,6 @@ my $passwd = $ENV{WWW_OFOTO_PASSWD};
 plan skip_all => "- valid Ofoto account needed for online tests. To enable tests set WWW_OFOTO_EMAIL and WWW_OFOTO_PASSWD environment variables."
 		unless $email && $passwd;
 plan tests => 6;
-
-# can we load the library?
-BEGIN { 
-   	use_ok( 'WWW::Ofoto' );
-	use_ok( 'DateTime' );
-};
 
 # create client with ordered list of arguements
 my $ofoto = WWW::Ofoto->new( { email => $email, passwd => $passwd } );
