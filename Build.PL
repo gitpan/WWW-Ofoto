@@ -1,21 +1,11 @@
 use Module::Build;
 
-my $class = Module::Build->subclass(
-    class => 'My::Builder',
-    code  => q{
-                 sub ACTION_dist {
-                     print "Running svn2cl to create ChangeLog\n";
-                     system( 'svn2cl' );
-                     shift->SUPER::ACTION_dist(@_);
-                 }
-              },
-);
-
-my $build = $class->new(
+my $build = Module::Build->new(
 
 	module_name		=> 'WWW::Ofoto',
 	license			=> 'perl',
 	create_readme	=>  1,
+    create_makefile_pl => 'passthrough',
 	requires		=> {
 						'Carp'			=> 0,
 						'Hash::Util'	=> 0,

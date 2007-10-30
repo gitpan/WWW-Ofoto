@@ -19,8 +19,7 @@ use warnings;
 
 use base qw(WWW::Ofoto);
 
-use vars qw($VERSION);
-$VERSION = sprintf("%d.%02d", q$Revision: 1.4 $ =~ /(\d+)\.(\d+)/);
+our $VERSION = '1.22';
 
 1;
 

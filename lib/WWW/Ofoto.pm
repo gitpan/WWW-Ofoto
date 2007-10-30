@@ -26,7 +26,7 @@ use WWW::Mechanize;
 use DateTime;
 use base qw(Class::Accessor::Fast);
 
-our $VERSION = '1.21';
+our $VERSION = '1.22';
 
 my  $debug = 1;		# Class level debug flag
 
@@ -458,9 +458,11 @@ website (C<http://www.ofoto.com/> or C<http://wwww.kodakgallery.com/>).
 It is based on the excellent C<WWW::Mechanize> module by Andy Lester. 
 I also requires the C<DateTime> module to handle dates.
 
-=head2 CLASS METHODS
+=head1 CLASS METHODS
 
-=head3 new()
+=over 4
+
+=item new()
 
   my $ofoto = WWW::Ofoto->new( { 
 		  email => 'me@home.com',
@@ -472,9 +474,13 @@ you will want to pass in your email and password for the Ofoto site, but
 they can be set later via accessors. Returns the created object or
 croaks if there is error.
 
-=head2 OBJECT METHODS
+=back
 
-=head3 $ofoto->login()
+=head1 OBJECT METHODS
+
+=over 4
+
+=item $ofoto->login()
 
   $ofoto->login() or die "couldn't login";
 
@@ -482,7 +488,7 @@ Logs into the Ofoto website using the email and password supplied in the
 constructor or through the C<email> and C<passwd> accessors. Returns true
 if the login was successful.
 
-=head3 $ofoto->list_albums()
+=item $ofoto->list_albums()
 
   	my $albums = $ofoto->list_albums;
 
@@ -499,7 +505,7 @@ and C<link> are the keys to the value hash:
 		   $name, $album->{count}, $album->{date}->mdy;
   }
 
-=head3 $ofoto->upload_new_album()
+=item $ofoto->upload_new_album()
 
   $count = $ofoto->upload_new_album( {
 			title => 'Nov 2005 Beach',
@@ -516,7 +522,7 @@ and upload each.
 Will most likely croak if there is any error. The number of photos uploaded
 is returned.
 
-=head3 $ofoto->upload_to_album()
+=item $ofoto->upload_to_album()
 
   $result = $ofoto->upload_to_album( {
 			title => 'Nov 2005 Beach',
@@ -529,15 +535,15 @@ functions identically to C<upload_new_album>.
 Will most likely croak if there is any error. The number of photos uploaded
 is returned.
 
-=head3 $ofoto->email() 
+=item $ofoto->email() 
 
-=head3 $ofoto->passwd() 
+=item $ofoto->passwd() 
 
-=head3 $ofoto->debug()
+=item $ofoto->debug()
 
 Accessors to retrieve or set their internal values.
 
-=head3 $ofoto->dump2file()
+=item $ofoto->dump2file()
 
 Utility function to print the last webpage loaded by C<WWW::Ofoto>
 as is stored via C<content()> in the C<WWW::Mechanize> agent.
@@ -546,6 +552,8 @@ See the C<WWW::Mechanize> documentation for more information.
 If an arguement is supplied, it is used as the filename to write to
 with C<.html> added as an an extention. If not arguement is provied,
 it will write to C<t.html>. Any existing file will be overwritten.
+
+=back
 
 =head1 SEE ALSO
 
