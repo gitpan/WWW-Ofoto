@@ -1,8 +1,8 @@
 ---
 name: WWW-Ofoto
-version: 1.23
+version: 1.27
 author:
-  - 'Mark V. Grimes, E<lt>mgrimes@cpan.orgE<gt>'
+  - 'Mark Grimes, E<lt>mgrimes@cpan.orgE<gt>'
 abstract: A module to interact with the Ofoto (now Kodakgallery) website
 license: perl
 resources:
@@ -14,15 +14,18 @@ requires:
   DateTime: 0
   Hash::Util: 0
   WWW::Mechanize: 1
+build_requires:
+  File::Spec: 0
+  Test::More: 0
 recommends:
   AppConfig: 0
 provides:
   WWW::KodakGallery:
     file: lib/WWW/KodakGallery.pm
-    version: 1.23
+    version: 1.27
   WWW::Ofoto:
     file: lib/WWW/Ofoto.pm
-    version: 1.23
+    version: 1.27
 generated_by: Module::Build version 0.2808
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html

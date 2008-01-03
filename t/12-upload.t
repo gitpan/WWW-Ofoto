@@ -21,7 +21,7 @@ isa_ok $ofoto, 'WWW::Ofoto';
 my $result = $ofoto->login();
 ok $result, "successfull login";
 
-my $title = 'new ' . localtime(time);
+my $title = 'new thisislongpleasehyphenate' . localtime(time);
 my $desc  = 'test album';
 my $date  = DateTime->now;
 my $pics  = ['t/pics/test1.jpg','t/pics/test2.jpg'];
@@ -41,4 +41,5 @@ ok $albums->{$title}->{count} == scalar @$pics, "correct count returned";
 is( $albums->{$title}->{date}->ymd, $date->ymd, "dates are equal" )
 		or print "Date(web) = ", scalar $albums->{$title}->{date}, "\n",
 		         "Date(int) = ", scalar $date, "\n";
+
 

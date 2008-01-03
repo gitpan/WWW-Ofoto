@@ -2,11 +2,11 @@ package WWW::Ofoto;
 
 ###########################################################################
 # WWW::Ofoto
-# Mark V. Grimes
+# Mark Grimes
 # $Id: Ofoto.pm,v 1.12 2007/09/19 17:06:38 mgrimes Exp $
 #
 # A perl module to interact with the ofoto website.
-# Copyright (c) 2005  (Mark V. Grimes).
+# Copyright (c) 2005  (Mark Grimes).
 # All rights reserved. This program is free software; you can redistribute
 # it and/or modify it under the same terms as Perl itself.
 #
@@ -26,9 +26,9 @@ use WWW::Mechanize;
 use DateTime;
 use base qw(Class::Accessor::Fast);
 
-our $VERSION = '1.23';
+our $VERSION = '1.27';
 
-my  $debug = 1;		# Class level debug flag
+my $debug = 0;		# Class level debug flag
 
 # #########################################################
 #
@@ -41,7 +41,7 @@ my %fields = (		# List of all the fields which will have accessors
 	'name'		=> undef,		# the name 
 	'email'		=> undef,
 	'passwd'	=> undef,
-
+    'loggedin'  => undef,
 );
 __PACKAGE__->mk_accessors( keys %fields );
 
@@ -52,7 +52,6 @@ sub new {
 		'_permitted'	=> \%fields,
 		'_DEBUG' 		=> 0,			# Instance level debug flag
 		'_maxupload'	=> 10,
-		'_loggedin'		=> 0,
 		'_collid_cache'	=> {},
 		'_ua'			=> undef,
 		%fields,
@@ -102,7 +101,7 @@ sub login {
 	$ua->follow_link( url_regex => qr{MyGallery.jsp} ) or croak "could not find My Kodak link";
 	$self->dump2file();
 
-	return $self->{_loggedin} = $ua->content =~ m{Welcome };
+	return $self->{loggedin} = $ua->content =~ m{Welcome };
 }
 
 sub _get_page_links {
@@ -134,7 +133,7 @@ sub _get_album_links {
 	my @matches =  $ua->content =~ m!
 			<p [^>]*>
 				<a [^>]* href="(BrowsePhotos.jsp.*?)">	# the link
-					([^<]*)								# the name
+					(.*?)								# the name
 				</a>
 			</p>    		\s*
 			<p>				\s*
@@ -142,8 +141,9 @@ sub _get_album_links {
 				\((\d+) \s+ photos\) 					# photo count
 			</p>
 		!gmx;
-	print "found ", scalar @matches, " matches\n" if $self->debug;
+    for (@matches) { s|-\s*<br\s*/>||gi; }              # remove any hyphen
 
+	print "found ", scalar @matches, " matches\n" if $self->debug;
 	return @matches;
 }
 
@@ -151,7 +151,7 @@ sub list_albums {
 	my $self = shift;
 	my $ua = $self->{_ua};
 
-	croak "need to login first" unless $self->{_loggedin};
+	croak "need to login first" unless $self->{loggedin};
 
 	# $ua->follow_link( text_regex => qr{My Recent Albums|My Albums} ) or croak "Couldn't find the View All Albums link";
 	$ua->follow_link( url_regex => qr{AlbumMenu.jsp\?$} ) or croak "Couldn't find the AlbumMenu main link";
@@ -190,7 +190,7 @@ sub upload_new_album {
 	my $ua = $self->{_ua};
 
 	# Checks
-	croak "need to login first" unless $self->{_loggedin};
+	croak "need to login first" unless $self->{loggedin};
 	my @pics = $self->_confirm_album_opts( $opts, 1 ) or return 0;
 	
 	$self->_create_new_album( $opts );
@@ -247,14 +247,14 @@ sub _upload_images {
         $input_html .= "<input class='showFile' type='file' size='0' name='$id' id='$id' value='$file'/>\n";
 	}
 
-    print "input = $input_html\n";
+    # print "input = $input_html\n";
     my $content = $ua->content;
     $content =~ s{
             \s* <input[^>]*id="image_file_1"[^>]*/> \s*
         }{
             $input_html
         }x  or croak "couldn't update the html for input\n";
-    print $content;
+    # print $content;
     $ua->update_html( $content );
 
 
@@ -280,7 +280,7 @@ sub upload_to_album {
 	my $opts = shift;
 
 	# Checks
-	croak "need to login first" unless $self->{_loggedin};
+	croak "need to login first" unless $self->{loggedin};
 	my @pics = $self->_confirm_album_opts( $opts, 0 ) or return 0;
 	my $albums = $self->list_albums;
 	croak "album $opts->{title} does not exists" unless $albums->{ $opts->{title} }; 
@@ -342,7 +342,9 @@ sub _find_upload_album_id {
 
 	# Dig the id out of the html
 	# <p class="albumname"><a href="#" onclick="uploadToAlbum('93967094907');document.ofotoupload_form.submit();return false;">new Thu Jan  5 12:29:39 2006</a></p>
-	my ($collid) = $ua->content =~ m{uploadToAlbum\('(\d+)'\);document.ofotoupload_form.submit\(\);return false;">$title}; #<};
+    my $content = $ua->content;
+    $content =~ s|-\s*<br\s*/>||gi;  # remove any hyphen
+	my ($collid) = $content =~ m{uploadToAlbum\('(\d+)'\);document.ofotoupload_form.submit\(\);return false;">$title}; #<};  # no critic
 	print "collid is $collid\n" if $self->debug;
 
 	return $self->{_collid_cache}->{$title} = $collid;
@@ -562,11 +564,11 @@ just a wrapper around this module.
 
 =head1 AUTHOR
 
-Mark V. Grimes, E<lt>mgrimes@cpan.orgE<gt>
+Mark Grimes, E<lt>mgrimes@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2005 by Mark V. Grimes
+Copyright (C) 2005 by Mark Grimes
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself, either Perl version 5.8.2 or,

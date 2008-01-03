@@ -1,3 +1,32 @@
+2007-12-29 01:05  mgrimes
+
+	* lib/WWW/KodakGallery.pm: Updated the author name, etc.
+
+2007-11-26 19:13  mgrimes
+
+	* lib/WWW/Ofoto.pm, t/16-upload-long.t: Fixed a bug uploading to an
+	  existing title with a long file name
+
+2007-11-06 01:12  mgrimes
+
+	* lib/WWW/KodakGallery.pm, lib/WWW/Ofoto.pm, t/12-upload.t: Added
+	  test for hyphen, updated version.
+
+2007-11-06 01:03  mgrimes
+
+	* lib/WWW/Ofoto.pm: Changed loggedin to be an external function
+	  Strip out any hyphens in Ofoto album lists
+
+2007-10-30 23:04  mgrimes
+
+	* lib/WWW/KodakGallery.pm, lib/WWW/Ofoto.pm: Updated version
+
+2007-10-30 23:03  mgrimes
+
+	* t.html, t/10-login.t, t/11-listalbums.t, t/12-upload.t,
+	  t/13-addphotos.t, t/14-upload_lots.t, t/15-add_lots.t: Changed
+	  tests to work with new Test Harness
+
 2007-10-30 21:34  mgrimes
 
 	* ., Build.PL, README, lib/WWW/KodakGallery.pm, lib/WWW/Ofoto.pm:

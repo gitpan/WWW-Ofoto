@@ -2,11 +2,11 @@ package WWW::KodakGallery;
 
 ###########################################################################
 # WWW::KodakGallery
-# Mark V. Grimes
+# Mark Grimes
 # $Id: KodakGallery.pm,v 1.4 2007/05/04 18:26:05 mgrimes Exp $
 #
 # A perl module to interact with the ofoto website.
-# Copyright (c) 2005  (Mark V. Grimes).
+# Copyright (c) 2005  (Mark Grimes).
 # All rights reserved. This program is free software; you can redistribute
 # it and/or modify it under the same terms as Perl itself.
 #
@@ -19,7 +19,7 @@ use warnings;
 
 use base qw(WWW::Ofoto);
 
-our $VERSION = '1.23';
+our $VERSION = '1.27';
 
 1;
 
@@ -44,7 +44,7 @@ The C<WWW::Ofoto> module.
 
 =head1 AUTHOR
 
-Mark V. Grimes, E<lt>mgrimes@cpan.orgE<gt>
+Mark Grimes, E<lt>mgrimes@cpan.orgE<gt>
 
 =head1 COPYRIGHT AND LICENSE
 
