@@ -1,3 +1,12 @@
+2008-01-03 02:27  mgrimes
+
+	* lib/WWW/KodakGallery.pm, lib/WWW/Ofoto.pm: Minor updates
+
+2007-12-29 01:06  mgrimes
+
+	* Build.PL, lib/WWW/Ofoto.pm: Added Client::Lirc module
+	  Updated the build_requires
+
 2007-12-29 01:05  mgrimes
 
 	* lib/WWW/KodakGallery.pm: Updated the author name, etc.

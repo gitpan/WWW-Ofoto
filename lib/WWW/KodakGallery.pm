@@ -19,7 +19,7 @@ use warnings;
 
 use base qw(WWW::Ofoto);
 
-our $VERSION = '1.27';
+our $VERSION = '1.28';
 
 1;
 

@@ -26,7 +26,7 @@ use WWW::Mechanize;
 use DateTime;
 use base qw(Class::Accessor::Fast);
 
-our $VERSION = '1.27';
+our $VERSION = '1.28';
 
 my $debug = 0;		# Class level debug flag
 
@@ -115,9 +115,12 @@ sub _get_page_links {
 			# Page: \s+ 1		\s*
 			<a \s+ href="( AlbumMenu.jsp [^"]* ) [^>]* > \d+ </a>
 		!gmx;
-	# return two sets of links; one from the top, the other from the bottom of the page
+
+	# return two sets of links; one from the top, the other from the bottom
+    # of the page
 	@pages = splice @pages, 0, (scalar @pages / 2);
-	print "there are ", scalar @pages, " additional pages of albums\n" if $self->debug;
+	print "there are ", scalar @pages, " additional pages of albums\n"
+        if $self->debug;
 
 	return @pages;
 }
@@ -153,15 +156,20 @@ sub list_albums {
 
 	croak "need to login first" unless $self->{loggedin};
 
-	# $ua->follow_link( text_regex => qr{My Recent Albums|My Albums} ) or croak "Couldn't find the View All Albums link";
-	$ua->follow_link( url_regex => qr{AlbumMenu.jsp\?$} ) or croak "Couldn't find the AlbumMenu main link";
+    do {
+        $ua->follow_link( text => 'My Gallery' ) 
+            or confess "Couldn't find the My Gallery link";
+    } unless $ua->find_link( text => 'See All Albums' );
+
+	$ua->follow_link( text => 'See All Albums' )
+        or confess "Couldn't find the See All Albums link";
 
 	my @matches = $self->_get_album_links;		# pull raw album data off the page
 	my $page_count = $self->_get_page_links;	# are there any Page 1 2 3 4 links
 	for my $i (2..$page_count+1){
 		print "getting next page of albums: $i\n" if $self->debug;
 		$ua->follow_link( url_regex => qr/AlbumMenu.jsp/, text => $i )
-				or croak "couldn't follow page link: $i";
+				or confess "couldn't follow page link: $i";
 		push @matches, $self->_get_album_links;
 		$self->dump2file;
 	}
